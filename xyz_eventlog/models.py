@@ -13,7 +13,7 @@ class Event(models.Model):
         ordering = ('-create_time',)
 
     owner_type = models.ForeignKey(ContentType, verbose_name='属主类别', null=True, blank=True,
-                                   on_delete=models.PROTECT)
+                                   related_name='eventlog_event_set', on_delete=models.PROTECT)
     owner_id = models.PositiveIntegerField(verbose_name='属主编号', null=True, blank=True, db_index=True)
     owner = GenericForeignKey('owner_type', 'owner_id')
     name = models.CharField("名称", max_length=64)
@@ -34,7 +34,7 @@ class Period(models.Model):
         ordering = ('-create_time',)
 
     owner_type = models.ForeignKey(ContentType, verbose_name='属主类别', null=True, blank=True,
-                                   on_delete=models.PROTECT)
+                                   related_name='eventlog_period_set', on_delete=models.PROTECT)
     name = models.CharField("结束", max_length=64)
     begin_event = models.CharField("开始", max_length=64)
     end_event = models.CharField("结束", max_length=64)
@@ -51,7 +51,7 @@ class Duration(models.Model):
         ordering = ('-create_time',)
 
     owner_type = models.ForeignKey(ContentType, verbose_name='属主类别', null=True, blank=True,
-                                   on_delete=models.PROTECT)
+                                   related_name='eventlog_duration_set', on_delete=models.PROTECT)
     owner_id = models.PositiveIntegerField(verbose_name='属主编号', null=True, blank=True, db_index=True)
     owner = GenericForeignKey('owner_type', 'owner_id')
     period = models.ForeignKey(Period, verbose_name=Period._meta.verbose_name, on_delete=models.PROTECT)
